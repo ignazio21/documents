@@ -1,0 +1,35 @@
+# What are Playbooks?
+# Conglomerations of commands conditions, variables and tests executing against
+# one or more clients defined within a YAML file
+
+# A YAML is a High-level key-value language
+
+# Install lynx web browser locally
+
+$ansible local -s -m shell -a 'yum install lynx'
+
+# Getting closer to a playbook, use a more 'playbook' way to install packages
+# To install lynx
+
+# Use the YUM module, with SUDO (-s), take the PACKAGE lynx,
+# make sure the STATE is INSTALLED, and UPDATE the CACHE REPOSITORY
+
+$ansible web -s -m yum -a 'pkg=lynx state=installed update_cache=true'
+
+# HOW TO CONVERT INTO A PLAYBOOK?
+
+# Make a Playbook directory
+# Create a YAML file
+
+$ mkdir playbooks
+$ vi playbooks/appserver.yaml
+
+- hosts: appserver
+  tasks:
+  - name: Install Lynx on APP Servers
+    yum: pkg=lynx state=installed update_cache=true
+
+
+# RUN THE YAML FILE
+
+$ansible-playbook -s appserver.yaml

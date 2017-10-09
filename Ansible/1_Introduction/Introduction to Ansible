@@ -1,0 +1,30 @@
+
+ANSIBLE for CONF. MANAGEMENT & DEPLOYMENTS
+
+- Introduction
+
+IT Automation, conf. management, provisioning tool
+
+Uses PlayBooks to deploy,manage,build, test
+
+- Differences with other Tools
+
+Chef/Puppet
+	- Work with 'Master' server in the setup.
+	Ansible works with SSH and does not have a 'master'.
+
+Workflow/Push vs PUll
+	- Since most conf. manag. tools have a 'master' server they use PULL method to retrieve data.
+	Ansible uses the PUSH method requiring no Client installation or configuration.
+
+- Order
+	Ansible uses pure order execution.
+	Puppet in not applied in order.
+
+- Language
+	Ansible is written upon Python
+	Pupper is written in Ruby
+
+- Syntax
+	Ansible is based in YAML
+	Puppet is based on DSL

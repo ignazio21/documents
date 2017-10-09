@@ -1,0 +1,44 @@
+Markup Language
+
+Simple List:
+
+	---#List
+	-
+	-
+
+Inline formatting: [a,b,c,d]
+
+	# ARRAYS Key/Value Pair
+	Name: ..
+	Age: ..
+	Date: ..
+
+Inline formatting: {Name:a,Age:b,Date:c}
+
+Blank Line means new paragraphs
+
+Datatypes
+
+---
+a:123		- Integrer
+b:"123"		- String
+c:123.0		- Float
+d:Yes		- Boolean True
+
+
+Playbook YAML Example
+
+This Playbook will look for a group of hosts called "appserver" and then try to install lynx and query if telnet is installed using the 'yum' module
+
+---# Playbook description (Ignored during Run)
+- hosts: appserver  
+  tasks:
+  - name: Install Lynx on App Servers
+  yum: pkg=lnx state=installed update_cache=true
+  - name: Querying for Telnet install
+  yum: pkg=telnet state=present update_cache=true
+
+
+
+
+

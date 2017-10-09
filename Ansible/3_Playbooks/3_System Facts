@@ -1,0 +1,45 @@
+-> ### LESSON ###
+-> ### System Facts ###
+
+# FACTS are information regarding the current system
+# such as IP address, architecture and so on.
+# It is visible through the SETUP module
+
+# The following command will display as JSON file
+
+$ansible local -m setup | more
+
+# With the following command, create a file with all the information
+# diplayed by the setup module
+
+$ansible local -m setup --tree /tmp/facts
+
+#FILTER the setup
+
+$ansible web -m setup -a 'filter=*ipv4*'
+
+
+-> ### LESSON ####
+-> ### System Facts: Common Values for Playbooks ###
+
+# For the following filter per 'ansible_' since most of the variables
+# are referred startin with 'ansible_'
+
+$ansible web -m setup -a 'filter=ansible_*'
+
+$ansible web -m setup -a 'filter=ansible_architecture'
+$ansible web -m setup -a 'filter=ansible_distribution'
+$ansible web -m setup -a 'filter=ansible_distribution_version'
+$ansible web -m setup -a 'filter=ansible_domain'
+$ansible web -m setup -a 'filter=ansible_fqdn'
+$ansible web -m setup -a 'filter=ansible_interfaces'
+$ansible web -m setup -a 'filter=ansible_kernel'
+$ansible web -m setup -a 'filter=ansible_memtotal_mb'
+
+#Check for processor variables names first
+
+$ansible web -m setup -a 'filter=ansible_proc*'
+
+#Check the Virtualization role
+
+$ansible web -m setup -a 'filter=ansible_virt*'

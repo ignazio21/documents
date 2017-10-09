@@ -1,0 +1,34 @@
+
+Server_1 -> Control Server
+Server_2 -> Web Client
+Server_3 -> Application Client
+
+cd /etc/ansible
+  - ansible.cfg
+  - hosts
+  - roles
+
+SET SELINUX TO DISABLED
+
+vi /etc/selinux/config
+  SELIUX=disabled
+
+REBOOT THE SYSTEM
+
+
+#### HOST file###
+
+mv /etc/ansible/hosts hosts.original
+vim hosts
+  [local]
+  localhost
+
+  [apache hosts]
+  <ip_address_of_web_client>
+
+  [appserver]
+  <ip_address_of_app_client>
+
+
+# Execute command against HOSTS groups
+ansible <group> -m ping

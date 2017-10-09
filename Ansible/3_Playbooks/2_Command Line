@@ -1,0 +1,20 @@
+
+# CHECK WHY OF USER IN SUDOERS
+
+# Execute a command to a specific remote host
+# -s for SUDO
+# using the SHELL module
+
+$ansible web -s -m shell -a 'yum list installed | grep python'
+
+# Execute a command to ALL remote hosts present in the /etc/ansible/hosts file
+# The following will install Telnet (if not present) to ALL the hosts
+
+$ansible all -s -m shell -a 'yum install -y telnet'
+
+# Same for the lynx web browser
+$ansible all -s -m shell -a 'yum install -y lynx'
+
+#RETURN CODES:
+0 : success
+1 : failure

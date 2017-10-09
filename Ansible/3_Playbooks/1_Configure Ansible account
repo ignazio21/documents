@@ -1,0 +1,38 @@
+# Allow the Ansible user to be secured and allowed of SUDO
+# to not login each-time and run non-interactively
+
+$sudo visudo
+
+test ALL=(ALL) NPASSWD:ALL
+
+#The user will be able to run SUDO without being asked for password
+
+$exit
+$su - test
+$sudo yum update
+
+vi /etc/ansible/ansible.cfg
+
+# Run ANSIBLE commands without being asked for password
+# Comment the following
+
+ask_sudo_pass = True
+
+#ADD SSH-KEY for also localhost
+
+$ssh-copy-id localhost
+$ssh-copy-id localhost.localdomain
+
+#Try
+ansible local -m ping
+
+#DO the same (only $sudo visudo, not modfing the configuration file) for all the other hosts
+#Try then from server_1
+
+$ansible all -m ping
+
+#Use the setup module to list all the known facts for all systems configured in the 'hosts' file on the system
+$ansible all -m setup
+
+#Filter showing only the content pertaining the system IP Addresses
+$ansible local -m setup -a 'filter=ans*ipv4*'

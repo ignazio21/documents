@@ -1,0 +1,35 @@
+-> Remember the Variable lesson
+  -> Import YAML using the VARS_FILES section
+-> Modify the ~/playbook/conf/webdefault.yml
+# Way to substitute the value of a variable inside another YAML file
+# into the MAIN YAML
+
+  -> Add the "PKG_LYNX" variable
+      ---
+      apache_version: 2.6
+      apache_mod_req: mod_ssl
+      pkg_lynx: lynx
+
+-> Modify the ~/playbook/myfirstplaybook.yml
+  ...
+  tasks:
+    - name: Install Lynx
+      action: yum name={{ pkg_lynx }} state=installed
+  ....
+
+  # Using {{ <variable_name> }}
+  # This way, it is going to install LYNX calling the variable "pkg_lynx"
+
+  ------
+# To use USER INPUT and use those as VARIABLES
+
+-> Modify the VARS_PROMPT into  ~/playbook/myfirstplaybook.yml
+
+  ....
+  vars_prompt:
+    - name: pkg_input
+      prompt: Package to install? [lynx,apache,telnet]
+  tasks:
+    - name: Install {{ pkg_input }}
+      action: yum name={{ pkg_input }} state=installed
+  ...

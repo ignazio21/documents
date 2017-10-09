@@ -1,0 +1,7 @@
+# DRY RUN
+# determine both syntax and configuration is going to be correct and run correctly
+#
+# --check parameter at the end of "ansible-playbook" will run as DRY RUN
+#
+
+$ansible-playbook myfirstplaybook.yml --check

@@ -1,0 +1,53 @@
+### IMPORTANT OF VARIABLES ###
+
+-> Everything defined in a section such as "vars" or "vars_files"
+   -> MUST be a LIST in case we are dealing with EXTERNAL stuff
+      Ex. Files listed inside the VARS_FILES are externally defined
+
+   -> NOT a LIST, in case are LOCALLY defined variable/parameters
+      Ex. "playbook_version" inside the VARS section in LOCALLY defined
+
+###############################
+
+# CREATE a CONF Directory
+
+$mkdir conf
+
+-> # List of values that are going to be imported within our playbook
+$vi conf/copyright.yml
+
+---
+message: Copyright 2017 Ignazio
+author: Linux Academy
+
+-> # Define VARIABLES referred to APACHE in a YAML file inside the CONF directory
+$vi conf/webdefaults.yml
+
+---
+apache_version: 2.6
+apache_mod_req: mod_ssl
+
+-> # VARS_FILES to import variables defined into YAML file inside the CONF directory
+-> # VARS_PROMPT to prompt the user (ask for input) one executed the playbook the values
+    # These variables can be used for future instantiation
+    # web_domain will be the Variable Name, while instead the user will be prompt
+    # with a message saying "Web Domain:"
+$vi myfirstplaybook.yml
+
+- hosts: web
+  user: centos
+  become_user: sudo
+  connection: ssh
+  gather_facts: no
+  vars:
+    playbook_version: 0.1b
+  vars_files:
+    - conf/copyright.yml
+    - conf/webdefault.yml
+  vars_prompt:
+    - name: web_domain
+      prompt: Web Domain
+
+# RUN IT
+
+$ansible-playbook myfirstplaybook.yml

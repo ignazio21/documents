@@ -1,0 +1,17 @@
+# CREATE a new YAML file
+
+$vi myfirstplaybook.yml
+
+-> # Here we create the TARGET section
+-> # Define the user we want to execute, saying once connected to web server,
+    # use the centos user
+-> # Run everything as SUDO. This way we can AVOID passing the "-s" when executing the "ansible-playbook" command
+-> # Define the CONNECTION type. EX: ssh
+-> # Define FACTS. The default module used is SETUP unless specified.
+
+--- # My first yaml file
+- hosts: web
+  user: centos
+  become_user: sudo
+  connection: ssh
+  gather_facts: no

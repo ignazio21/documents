@@ -1,0 +1,9 @@
+
+# DO THAT FOR ALL 3 Servers
+# UPDATE REPOSITORIES
+yum install -y epel-release
+yum update repolist
+
+yum update
+
+yum install ansible

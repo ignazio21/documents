@@ -1,0 +1,19 @@
+# we need to run operations in PARALLEL to all the hosts designated
+# we want to check when the command has SUCCESSED
+
+1. change HOSTS to ALL
+2. use ASYNC in the TASKS section to know when the command successed
+  - run async, makes run n parallel, value is MAX time in millisecond ansible
+    will wait for the command to complete
+3. PULL indicates ansible how often to check
+
+- hosts: all
+....
+  tasks:
+    ....
+    action: ..
+    async: 300
+    pull: 3
+    notify: ...
+
+4. RUN IT

@@ -1,0 +1,41 @@
+SV1 & SV2 & SV3
+
+adduser test
+passwd test
+
+mkdir /home/test/playbooks/
+chown test:test playbooks
+
+LOGIN AS TEST USER
+su - test
+ssh-keygen
+
+TO LOGIN WITHOUT A PASSWORD
+CHECK ALSO USING DNS INSTEAD OF IP (INTERNAL IP)
+
+TWO WAYS:
+1) Using the SSH-AGENT:
+  $ssh-agent bash
+  $ssh-add <pem file>
+
+2) 
+#SERVER 1
+ssh-copy-id <server_2>
+ssh <server_2>
+
+ssh-copy-id <server_3>
+ssh <server_3>
+
+#SERVER 2
+ssh-copy-id <server_1>
+ssh <server_1>
+
+ssh-copy-id <server_3>
+ssh <server_3>
+
+#SERVER 3
+ssh-copy-id <server_2>
+ssh <server_2>
+
+ssh-copy-id <server_1>
+ssh <server_1>

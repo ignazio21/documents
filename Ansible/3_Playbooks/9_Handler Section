@@ -1,4 +1,4 @@
-# ability to notify another section when something happens
+# ability to NOTIFY another section when something happens
 # create an Action to install the HTTPD server
 # use YUM pkg to install apache
 # NOTIFY Value must mach the HANDLERS name Value
@@ -10,9 +10,9 @@
 
 $vi myfirstplaybook.yml
 
-- hosts: web
-  user: centos
-  # UNDERSTAND BECOMING SUDO
+- hosts: nodes
+  user: vagrant
+  become: yes
   connection: ssh
   gather_facts: no
   vars:

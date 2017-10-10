@@ -1,0 +1,35 @@
+# ENCRYPT THE YAML FILE
+# In case we have sensitive information inside the YAML file
+
+$vi account.yml
+
+git_user: gituser
+git_pwd: gitpassword
+admin_user: admin
+admin_pwd: adminpassword
+
+# TO ENCRYPT a file
+
+$ansible-vault encrypt accounts.yml
+
+# To ENCRYPT the file
+
+$ansible-vault create secure.yml
+-> Vault password will be asked
+
+value1: somevalue
+
+$cat secure.yml
+-> We can see that the file is ENCRYPTED using the password
+
+# To edit the file and UN-ENCRYPT
+
+$ansible-vault edit secure.myl
+
+# To change the PASSWORD used to ENCRYPT the file
+
+$ansible-vault rekey secure.yml
+
+# TO UN-ENCRYPT a file
+
+$ansible-vault decrypt secure.yml

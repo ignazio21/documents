@@ -1,0 +1,19 @@
+# TO PROMPT THE USER
+# PRIVATE to prompt the input the user types or NOT
+# IN DEVOPS (using JENKINS for example) we can get INPUTs that are the OUTPUT of other actions
+
+$vi prompt.yml
+
+--- # PROMPT
+- hosts: nodes
+  ...
+  vars:
+    playbook_version: 0.01b
+  vars_prompt:
+    - name: pkgtoinstall
+      prompt: Package to install?
+      default: telnet
+      private: no
+  tasks:
+    - name: Install the package
+      yum: pkg={{ pkgtoinstall }} state=latest

@@ -1,0 +1,31 @@
+# Run a command until something changes.
+# limit the number of time to retry that command
+# register the RESULT
+# -1 refer to FAILURE
+# The "Verify service status" is going to run UNTIL the result will be different
+# then -1 (Failure).
+# This means that will end when the result will find the Active
+# 0 = SUCCESS
+# Once is 0 (SUCCESSFULL) will end
+# Delay the RETRY of 5 SECONDS
+
+$vi until.yml
+--- # Until Playbook
+- hosts: nodes
+  become: yes
+  remote_user: vagrant
+  connection: ssh
+  gather_facts: no
+  tasks:
+    - name: Install Apache
+      yum: pkg=httpd state=latest
+    - name: Verify service status
+      shell: systemctl status httpd
+      register: result
+      until: result.stdout.find("active (running)") != -1
+      retries: 5
+      delay: 5
+    - debug: var=result
+
+# IT will attempt that the status is "active"
+# To do that, in the NODE start apache and check back in the controller the RESULT

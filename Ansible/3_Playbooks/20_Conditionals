@@ -1,0 +1,22 @@
+# CONDITIONAL statements
+# Used in case of <something_happen>
+# Keyword WHEN to indicate the action
+# This case GATHER_FACTS is NEEDED to rely on it
+
+ $vi when.yml
+
+ --- # WHEN PLAYBOOK
+ - hosts: nodes
+   user: vagrant
+   become: yes
+   connection: ssh
+   tasks:
+     - name: Install apache appropriate to Debian distribution
+       command: apt-get -y install apache2
+       when: ansible_os_family == "Debian"
+     - name: Install apache appropriate to Centos distribution
+       command: yum -y install httpd
+       when: ansible_os_family == "RedHat"
+
+# TO CHECK FIRST THE COMMAND
+$ansible nodes -m setup -a 'filter=ansible_os_type'

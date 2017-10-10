@@ -1,0 +1,21 @@
+# Way to LOOP certain commands with variable substitution to run multiple times
+# Multiple types
+ -> # nested loops
+ -> # loops with index array
+# Use the USER module
+  -> it will ITERATE the ITEMS in "with_items" and add them!
+$vi loop.yml
+
+---# LOOP Playbook Example
+- hosts: web
+  user: centos
+  become: yes
+  connection: ssh
+  gather_facts: no
+  tasks:
+    - name: Add a list of users
+      user: name={{ item }} state=present
+      with_items:
+        - user1
+        - user2
+        - user3

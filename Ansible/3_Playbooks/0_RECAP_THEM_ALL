@@ -1,0 +1,69 @@
+--- # to do something
+# GOOD FOR JENKINS -> file.yml --extra-vars "hosts=<host to run> user=<user to use>"
+# file.yml --check (for DRYRUN)
+# file.yml --start-at="<task name>"
+# file.yml --step (y/n/c to be asked for each run)
+# --tag "<tag>" file.yml
+
+
+# - hosts: '{{ hosts }}'
+#   user: '{{ user }}'
+- hosts: ansnode
+  connection: ssh
+  user: vagrant
+  become: yes
+  vars:
+    playbook_version: 1.0
+  vars_files:
+    - conf/copyright.yml
+    - conf/webdefaults.yml
+  vars_prompt:
+    - name: pkgtoinstall
+      prompt: Which package to install?
+      default: telnet
+      private: no
+  tasks:
+    - name: Fail something
+      command: /bin/false
+      ignore_errors: yes
+    - include: play.yml
+    - name: Install prompt packages
+      yum: pkg={{ pkgtoinstall }}
+      tags:
+        - prompt
+    - name: Install packages
+      yum: pkg={{ item }} state=installed
+      when: ansible_os_family == "Debian"
+      with_items:
+        - httpd
+        - docker
+      notify: Restart packages
+      tags:
+        - loopkg
+    - debug: msg="{{ lookup('env','HOME') }} is the value listed"
+    - name: start date/time stamp
+      raw: /usr/bin/date > /home/vagrant/uptime.log
+    - name: Log uptime
+      raw: /usr/bin/uptime > /home/vagrant/uptime.log
+    - name: List var folder
+      raw: ls -la /var >> /home/vagrant/dir.list
+      run_once: true
+    - name: Check telnet installation
+      raw: yum list installed | grep telnet > /home/vagrant/uptime.log
+    - name: Install docker
+      yum: pkg=docker state=installed
+    - name: Verify docker installed
+      shell: systemctl status docker
+      register: result
+      until: result.stdout.find("active (running)") != -1
+      retries: 3
+      delay: 2
+    - debug: var=result
+    - name: end date/time stamp
+      raw: /usr/bin/date > /home/vagrant/uptime.log
+  handlers:
+     - name: Restart packages
+       action: service name={{ item }} state=restarted
+       with_items:
+         - httpd
+         - docker

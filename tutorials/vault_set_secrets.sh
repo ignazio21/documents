@@ -3,6 +3,8 @@
 export VAULT_TOKEN=$1
 export VAULT_ADDR=$2
 
-execute=$(vault read secret/password)
+execute_login=$(vault auth $VAULT_TOKEN)
+execute_read=$(vault read secret/password)
 
-echo $execute
+echo $execute_login
+echo $execute_read

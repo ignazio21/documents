@@ -1,5 +1,5 @@
 #!/bin/sh
 
-execute=$(curl -X POST ((vault_url)) -d ((vault_headers)))
+execute=$(curl -X POST ${VAULT_URL} -d ${VAULT_HEADERS})
 
 echo $execute

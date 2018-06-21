@@ -1,0 +1,8 @@
+provisioner "local-exec" {
+ command = <<AwsCliCommand
+      aws mediastore put-container-policy \
+        --container-name ${aws_media_store_container.container.name} \
+        --policy '${data.aws_iam_policy_document.container.json}'
+    AwsCliCommand
+   }
+}
